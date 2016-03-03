@@ -1,0 +1,7 @@
+name             'opsline-users'
+maintainer       'Opsline'
+maintainer_email 'support@opsline.com'
+license          'All rights reserved'
+description      'Installs/Configures opsline-users'
+long_description 'Installs/Configures opsline-users'
+version          '0.1.0'
