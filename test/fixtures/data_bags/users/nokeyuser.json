@@ -1,0 +1,10 @@
+{
+  "id": "nokeyuser",
+  "action": "create",
+  "password": "$1$BjQFKDmR$S2QijtFBqJTWBPlKPbTBw/",
+  "groups": [
+    "anothergroup"
+  ],
+  "shell": "/bin/bash",
+  "comment": "No Key User"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "user2",
+  "action": "create",
+  "password": "$1$BjQFKDmR$S2QijtFBqJTWBPlKPbTBw/",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDfCCVe3ln+qrsBRMH2Jq5MF44Dk8tiD/NAtnx+e47St9z5oMjCXENCjQ9UGctnDYUHfr50ifb9zH1pmTPI+X0N+0s81AvtHm0cPYFvZkt870QWG4TvImBLzfc/QlpiFpxzJnsvOF6hbI6gjwX0tg6VklwS+g/YrCzS7ZzLimiviR42twC385c62QmGoJKzmE/0VvPly7TnDWsMUU4OtixOMzvGf8UvUOvh+m1gbN5GtcDuUkXFH9HbwW+6WYPwEk2UKidFijF8CdBg9pSOGZNLDhWQpEz1CcOGdWQzRRZiQTKUzZCEX4Gg6VK7fiiqnBT7WA01hmIBmnZhdqMODGYF user2@localhost"
+  ],
+  "groups": [
+    "sysadmin",
+    "anothergroup"
+  ],
+  "shell": "/bin/bash",
+  "home": "/var/lib/user2",
+  "comment": "User Two"
+}
