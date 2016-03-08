@@ -1,6 +1,8 @@
 {
   "id": "qa",
   "gid": "1300",
-  "environments": "qa",
+  "environments": [
+    "qa"
+  ],
   "action": "remove"
 }

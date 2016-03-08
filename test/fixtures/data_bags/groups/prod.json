@@ -1,6 +1,8 @@
 {
   "id": "prod",
   "gid": "1200",
-  "environments": "production",
+  "environments": [
+    "production"
+  ],
   "action": "create"
 }

@@ -22,9 +22,15 @@ suites:
     attributes:
       opsline-users:
         users_databag_name: users
+        groups_databag_name: groups
   - name: environments
     run_list:
       recipe[opsline-users::default]
     attributes:
       opsline-users:
         users_databag_name: environments
+        groups_databag_name: groups
+    provisioner:
+      client_rb:
+        environment: production
+

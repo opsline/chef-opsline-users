@@ -1,5 +1,5 @@
 {
-  "id": "qauser",
+  "id": "testuser",
   "action": "create",
   "password": "$1$q4sX7IbB$htZGTLOnWuetSrgyWZkJm1",
   "ssh_keys": [
@@ -9,8 +9,8 @@
     "sysadmin"
   ],
   "environments": [
-    "qa"
+    "test"
   ],
   "shell": "/bin/bash",
-  "comment": "QA User"
+  "comment": "Test User"
 }
