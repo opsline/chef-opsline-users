@@ -4,8 +4,12 @@ class Chef
 
       def _get_databag_item(databag_name, item_name)
         item = Chef::DataBagItem.load(databag_name, item_name).to_hash
-        if item['type'].respond_to?('has_key?') && item['type'].has_key?('encrypted_data')
-          item = Chef::EncryptedDataBagItem.load(databag_name, item_name).to_hash
+        item.each do |k, v|
+          next if k == 'id'
+          if item[k].respond_to?('has_key?') && item[k].has_key?('encrypted_data')
+            item = Chef::EncryptedDataBagItem.load(databag_name, item_name).to_hash
+            break
+          end
         end
         item
       end

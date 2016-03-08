@@ -1,0 +1,14 @@
+{
+  "id": "user_different_name",
+  "username": "user3",
+  "action": "create",
+  "password": "$1$BjQFKDmR$S2QijtFBqJTWBPlKPbTBw/",
+  "ssh_keys": [
+  ],
+  "groups": [
+    "anothergroup"
+  ],
+  "shell": "/bin/sh",
+  "home": "/home/user3",
+  "comment": "User Two"
+}

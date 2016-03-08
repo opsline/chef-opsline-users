@@ -42,7 +42,7 @@ get_all_groups().each do |group_name|
   # add to list of groups, only if created
   users_groups[g] if validated_action == :create
 
-  Chef::Log.debug("Creating group #{group_name}")
+  Chef::Log.info("Creating group #{group_name}")
 
   group group_name do
     action validated_action
@@ -76,12 +76,12 @@ get_all_users().each do |user_name|
 
   manage_home = (home_dir == '/dev/null' ? false : true)
 
+  Chef::Log.info("Creating user #{u['username']}")
+
   group u['username'] do
     gid validated_gid
-    only_if { u['gid'] && u['gid'].is_a?(Numeric) }
+    only_if { validated_gid.is_a?(Numeric) }
   end
-
-  Chef::Log.debug("Creating user #{u['username']}")
 
   user u['username'] do
     action validated_action
@@ -95,7 +95,7 @@ get_all_users().each do |user_name|
   end
 
   if manage_home
-    if validated_action == :create && (u.has_key?('ssh_keys') || u.has_key?('ssh_private_key') || u.has_key?('ssh_public_key'))
+    if validated_action == :create and (u.has_key?('ssh_keys') or u.has_key?('ssh_private_key') or u.has_key?('ssh_public_key'))
       file_action = :create
     else
       file_action = :delete
