@@ -6,7 +6,7 @@ class Chef
         item = Chef::DataBagItem.load(databag_name, item_name).to_hash
         item.each do |k, v|
           next if k == 'id'
-          if item[k].respond_to?('has_key?') && item[k].has_key?('encrypted_data')
+          if item[k].respond_to?('key?') && item[k].key?('encrypted_data')
             item = Chef::EncryptedDataBagItem.load(databag_name, item_name).to_hash
             break
           end
@@ -24,13 +24,14 @@ class Chef
 
       def get_group(group_name)
         g = _get_databag_item(node['opsline-users']['groups_databag_name'], group_name)
-        g['action'] == 'create' unless g.has_key?('action')
+        g['action'] == 'create' unless g.key?('action')
         g
       end
 
       def get_user(user_name)
         u = _get_databag_item(node['opsline-users']['users_databag_name'], user_name)
-        u['action'] == 'create' unless u.has_key?('action')
+        u['action'] == 'create' unless u.key?('action')
+        u['groups'] == [] unless u.key?('groups')
         u
       end
 
@@ -43,6 +44,8 @@ class Chef
           return :create
         when 'remove'
           return :remove
+        when 'lock'
+          return :lock
         else
           Chef::Application.fatal!('opsline-user: unsupported action in databag')
         end

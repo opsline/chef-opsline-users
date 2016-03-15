@@ -14,6 +14,11 @@ describe 'groups' do
     it { should have_gid 1500 }
   end
 
+  describe group('group1') do
+    it { should exist }
+    it { should have_gid 1900 }
+  end
+
   describe group('notcreated') do
     it { should_not exist }
   end

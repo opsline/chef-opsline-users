@@ -28,23 +28,25 @@ users_groups = {}
 
 
 # create all the groups
-get_all_groups().each do |group_name|
+get_all_groups.each do |group_name|
   g = get_group(group_name)
 
   # don't create if environment specified and not the current environment
-  next if g.has_key?('environments') and ! g['environments'].include?(node.chef_environment)
+  next if g.key?('environments') && !g['environments'].include?(node.chef_environment)
 
   validated_action = validate_action(g['action'])
   validated_gid = validate_id(g['gid'])
+
+  g['groupname'] ||= g['id']
 
   # add users list
   g['users'] = []
   # add to list of groups, only if created
   users_groups[g] if validated_action == :create
 
-  Chef::Log.info("Creating group #{group_name}")
+  Chef::Log.info("Creating group #{g['groupname']}")
 
-  group group_name do
+  group g['groupname'] do
     action validated_action
     gid validated_gid
   end
@@ -52,23 +54,23 @@ end
 
 
 # create all the users
-get_all_users().each do |user_name|
+get_all_users.each do |user_name|
   u = get_user(user_name)
 
   # don't create if environment specified and not the current environment
-  next if u.has_key?('environments') and ! u['environments'].include?(node.chef_environment)
+  next if u.key?('environments') && !u['environments'].include?(node.chef_environment)
 
   validated_action = validate_action(u['action'])
   validated_uid = validate_id(u['uid'])
-  validated_gid = u.has_key?('gid') ? validate_id(u['gid']) : nil
+  validated_gid = u.key?('gid') ? validate_id(u['gid']) : nil
 
   u['username'] ||= u['id']
   u['groups'].each do |g|
-    users_groups[g] = { 'users' => [] } unless users_groups.has_key?(g)
+    users_groups[g] = { 'users' => [] } unless users_groups.key?(g)
     users_groups[g]['users'] << u['username'] unless validated_action == :remove
   end
 
-  if u.has_key?('home')
+  if u.key?('home')
     home_dir = u['home']
   else
     home_dir = "#{node['opsline-users']['home_base_directory']}/#{u['username']}"
@@ -86,22 +88,22 @@ get_all_users().each do |user_name|
   user u['username'] do
     action validated_action
     uid validated_uid
-    gid validated_gid if u.has_key?('gid')
+    gid validated_gid if u.key?('gid')
     shell u['shell']
     comment u['comment']
-    password u['password'] if u.has_key?('password')
+    password u['password'] if u.key?('password')
     supports manage_home: manage_home
     home home_dir
   end
 
   if manage_home
-    if validated_action == :create and (u.has_key?('ssh_keys') or u.has_key?('ssh_private_key') or u.has_key?('ssh_public_key'))
+    if (validated_action == :create || validated_action == :lock) && (u.key?('ssh_keys') || u.key?('ssh_private_key') || u.key?('ssh_public_key'))
       file_action = :create
     else
       file_action = :delete
     end
-    file_owner = u.has_key?('uid') ? validated_uid : u['username']
-    file_group = u.has_key?('gid') ? validated_gid : u['username']
+    file_owner = u.key?('uid') ? validated_uid : u['username']
+    file_group = u.key?('gid') ? validated_gid : u['username']
 
     directory "#{home_dir}/.ssh" do
       action file_action
@@ -120,10 +122,10 @@ get_all_users().each do |user_name|
       variables({
         ssh_keys: u['ssh_keys']
       })
-      only_if { u.has_key?('ssh_keys') }
+      only_if { u.key?('ssh_keys') }
     end
 
-    if u.has_key?('ssh_private_key')
+    if u.key?('ssh_private_key')
       key_type = u['ssh_private_key'].include?('BEGIN RSA PRIVATE KEY') ? 'rsa' : 'dsa'
       template "#{home_dir}/.ssh/id_#{key_type}" do
         action file_action
@@ -137,7 +139,7 @@ get_all_users().each do |user_name|
       end
     end
 
-    if u.has_key?('ssh_public_key')
+    if u.key?('ssh_public_key')
       key_type = u['ssh_public_key'].include?('ssh-rsa') ? 'rsa' : 'dsa'
       template "#{home_dir}/.ssh/id_#{key_type}.pub" do
         action file_action
