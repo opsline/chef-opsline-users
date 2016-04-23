@@ -6,7 +6,7 @@ describe 'groups' do
 
   describe group('sysadmin') do
     it { should exist }
-    it { should have_gid 1000 }
+    it { should have_gid 1010 }
   end
 
   describe group('anothergroup') do

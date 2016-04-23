@@ -1,6 +1,5 @@
 {
   "id": "anotheruser",
-  "action": "create",
   "password": "$1$q4sX7IbB$htZGTLOnWuetSrgyWZkJm1",
   "ssh_keys": [
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDjZQZjPPDG4p5udRhPZ4bM8usdx47BSoe8EZDq662vlPoudMPCHV80P3nYUQSofQxyzZmRdQnmETvap0zYADJp3qUdVTu/GjzonGAH0rWbhgxVDrkp0YwdSzCUZLehLObIyPXQzaOIsHsMwJ0aRPi2vUJB8d95joh+4DeC0UtCZeug2KT0VJR2V/UMVxj7emrpoh8tOlZs9pP7H5zXyvMIw9NtW1xsKn29iyewAtEKCDAt0FHLHakDCjLmzDivwwLJOf4qnu1ox+9aStvarUkCdTOTXP7hO5H3/v6VlhVtMK4HHK2j9h2jxOKuZn2NYpOcM1oCefNpPWd7uCMqGM4J anotheruser@localhost"

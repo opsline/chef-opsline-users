@@ -24,14 +24,14 @@ class Chef
 
       def get_group(group_name)
         g = _get_databag_item(node['opsline-users']['groups_databag_name'], group_name)
-        g['action'] == 'create' unless g.key?('action')
+        g['action'] = 'create' unless g.key?('action')
         g
       end
 
       def get_user(user_name)
         u = _get_databag_item(node['opsline-users']['users_databag_name'], user_name)
-        u['action'] == 'create' unless u.key?('action')
-        u['groups'] == [] unless u.key?('groups')
+        u['action'] = 'create' unless u.key?('action')
+        u['groups'] = [] unless u.key?('groups')
         u
       end
 
@@ -47,7 +47,7 @@ class Chef
         when 'lock'
           return :lock
         else
-          Chef::Application.fatal!('opsline-user: unsupported action in databag')
+          Chef::Application.fatal!("opsline-user: unsupported action in databag: '#{action}'")
         end
       end
 
