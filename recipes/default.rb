@@ -92,8 +92,14 @@ get_all_users.each do |user_name|
     shell u['shell']
     comment u['comment']
     password u['password'] if u.key?('password')
-    supports manage_home: manage_home
     home home_dir
+  end
+
+  directory home_dir do
+    owner u['username']
+    group u['username']
+    mode 0755
+    only_if { ::Dir.exists?(home_dir) }
   end
 
   if manage_home
